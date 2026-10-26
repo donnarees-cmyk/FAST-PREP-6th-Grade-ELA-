@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6th Grade ELA FAST Review: Practice Set 2</title>
+<style>
+  body{font-family:Arial,sans-serif;margin:0;background:#f3f6fb;color:#1d2b3a;line-height:1.5}
+  header{background:#6a2c91;color:#fff;padding:14px 20px}
+  header h1{margin:0;font-size:1.3rem}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#ece3f7;padding:10px 20px}
+  .bar input[type=text]{padding:6px;font-size:1rem;border:1px solid #888;border-radius:6px}
+  button{cursor:pointer;border:none;border-radius:6px;padding:7px 12px;font-size:.95rem;background:#6a2c91;color:#fff}
+  button.alt{background:#fff;color:#6a2c91;border:1px solid #6a2c91}
+  button.tab{background:#fff;color:#6a2c91;border:2px solid #6a2c91}
+  button.tab.on{background:#6a2c91;color:#fff}
+  button.spk{background:#2e8b57;padding:3px 8px;margin-left:6px;font-size:.85rem}
+  button.lock{background:#b3261e;margin-top:6px}
+  main{max-width:900px;margin:auto;padding:16px}
+  .card{background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+  .card.locked{background:#f4f4f4}
+  .passage{background:#fffbea;border-left:5px solid #e0b100;white-space:pre-line}
+  .bench{font-size:.85rem;color:#5a4a7a;font-style:italic}
+  .dok{display:inline-block;font-size:.75rem;font-weight:bold;color:#fff;border-radius:10px;padding:1px 9px;margin-right:6px}
+  .dok1{background:#2e8b57}.dok2{background:#d98200}.dok3{background:#b3261e}
+  label.opt{display:block;padding:5px 8px;margin:3px 0;border-radius:6px;cursor:pointer}
+  label.opt:hover{background:#f3ecfa}
+  textarea{width:100%;box-sizing:border-box;min-height:100px;font-size:1rem;padding:8px}
+  .good{color:#1b7a3a;font-weight:bold}.bad{color:#b3261e;font-weight:bold}
+  .fb{margin-top:8px;padding:8px;background:#eef7ee;border-radius:6px}
+  .lk{font-size:.85rem;color:#555;margin-top:6px}
+  #status{font-size:.85rem;color:#1b7a3a}
+  @media print{ header,.bar,button{display:none} body{background:#fff} }
+</style>
+</head>
+<body>
+<header><h1>📚 6th Grade ELA FAST Review: Practice Set 2</h1></header>
+
+<div class="bar">
+  <label>Name: <input type="text" id="name" placeholder="Type your name"></label>
+  <label>Voice speed: <input type="range" id="rate" min="0.6" max="1.4" step="0.1" value="0.9"></label>
+  <button class="alt" onclick="speechSynthesis.cancel()">⏹ Stop reading</button>
+  <button class="alt" onclick="backup()">⬇ Download backup</button>
+  <button class="alt" onclick="resetStudent()">🛠 Teacher reset</button>
+  <span id="status">Type your name so your work saves.</span>
+</div>
+<div class="bar" id="tabs"></div>
+<main id="app"></main>
+
+<script>
+/* ===== SETTINGS ===== */
+const TEACHER_CODE="teacher123";   // change this
+const PREFIX="fast6b_";
+
+/* ===== CONTENT ===== */
+const S = [
+{
+ title:"1. Reading Prose and Poetry",
+ bench:"Point of view, shifts in narrator, plot and character interaction, theme, poetry structure and figurative language",
+ passages:[
+ {title:"Passage A: The Science Fair Volcano (story)",
+ text:`Dani
+
+My volcano was supposed to be perfect. I had spent three weekends shaping the clay, painting the slopes, and measuring baking soda into exact scoops. The night before the fair, my little brother Theo "helped" by pouring extra vinegar into the bottle. "More fizz!" he grinned. I yelled so loudly that Mom came running. Theo's face crumpled, and he ran upstairs. I told myself he deserved it.
+
+Theo's Journal
+
+Dani thinks I ruin everything. I only wanted her volcano to be the best one there. She never lets me help with anything, so I figured if I made it bigger, she would finally say thanks. Instead she called me a pest. I am going to sleep in the hall closet tonight.
+
+Dani
+
+At the fair, my volcano erupted a full minute early, foam spilling over the table and onto the judge's shoes. Everyone laughed. Then I spotted Theo by the door, holding a towel he must have smuggled in his backpack. He didn't say a word, just handed it to me. For the first time all week, I laughed too. "Next year," I said, "you can be my lab partner."`},
+ {title:"Passage B: Mockingbird (poem)",
+ text:`Before the sun has climbed the fence,
+a mockingbird begins to sing.
+His voice is bright as a morning bell
+and he copies the doorbell's ring.
+
+He's a tiny, feathered radio
+that plays every song he hears,
+never worrying who might listen,
+never hushed by shyness or fears.
+
+Oh, to be so bold a borrower!
+To sing out loud, to sing out wide,
+and let the whole waking world know
+there's a singer living inside.`}
+ ],
+ qs:[
+ {dok:1,b:"Point of view",q:"Who narrates the section titled \"Theo's Journal\"?",o:["Dani","Theo, in first person","An outside narrator","Mom"],a:[1],why:"The journal uses \"I\" and \"me,\" so Theo tells it himself."},
+ {dok:2,b:"Shifts in point of view",q:"How does Theo's journal change what the reader understands about the extra vinegar?",o:["It shows Theo wanted to ruin the project.","It shows Theo was trying to help and win Dani's approval.","It shows Mom told Theo to add it.","It shows the volcano was already broken."],a:[1],why:"Only Theo's point of view reveals his good intentions."},
+ {dok:2,b:"Character interaction and plot",q:"Select TWO interactions between Dani and Theo that create the conflict.",type:"multi",o:["Theo adds extra vinegar to the bottle.","Dani wins a prize at the fair.","Dani yells at Theo and calls him a pest.","Mom buys a new volcano kit."],a:[0,2],why:"Theo's action and Dani's angry reaction start the problem."},
+ {dok:2,b:"Character interaction and plot",q:"How does Theo handing Dani the towel help resolve the conflict?",o:["It proves Theo cannot be trusted.","It makes the judge cancel the fair.","It stops the volcano from erupting.","It shows Theo forgave her and cared about her, so Dani sees him differently."],a:[3],why:"The kind act leads Dani to laugh and invite Theo to be her lab partner."},
+ {dok:2,b:"Theme",q:"Which statement is the best theme of the story?",o:["Competition matters more than family.","Younger siblings should stay out of the way.","Good intentions can be misunderstood, but kindness can repair a relationship.","Science projects should never include vinegar."],a:[2],why:"Both narrators' sections and the ending support this theme."},
+ {dok:3,b:"Theme development across narrators",q:"Write 3-4 sentences: Explain how the story's theme develops through BOTH Dani's and Theo's points of view. Use one detail from each narrator.",type:"sr",check:["States a theme as a full sentence","Uses a detail from Dani's narration","Uses a detail from Theo's journal","Explains how seeing both sides builds or changes the theme"],model:"Sample: The story shows that good intentions can be misunderstood and kindness can fix a relationship. Dani thinks Theo \"deserved\" her anger, but his journal reveals he only wanted her thanks. When he hands her the towel anyway, the reader sees that both siblings made mistakes and that forgiveness brings them together."},
+ {dok:1,b:"Poetry: figurative language",q:"\"He's a tiny, feathered radio\" is an example of:",o:["Simile","Metaphor","Alliteration","Rhyme"],a:[1],why:"It compares the bird to a radio without using \"like\" or \"as.\""},
+ {dok:1,b:"Poetry: figurative language",q:"\"His voice is bright as a morning bell\" is an example of:",o:["Simile","Metaphor","Personification","Onomatopoeia"],a:[0],why:"It uses \"as\" to compare."},
+ {dok:2,b:"Poetry: structure and meaning",q:"How does stanza 3 differ from stanzas 1 and 2?",o:["It describes the bird's appearance.","The speaker steps in to share a personal wish.","It lists the sounds the bird copies.","It tells what happens at night."],a:[1],why:"\"Oh, to be...\" shifts from describing the bird to the speaker's feelings."},
+ {dok:2,b:"Poetry: word choice and meaning",q:"What does the phrase \"a bold borrower\" suggest about the mockingbird?",o:["The bird owes people money.","The bird is afraid of other animals.","The bird takes things from people and should be punished.","The bird uses sounds from the world around him, and the speaker admires his boldness."],a:[3],why:"The bird \"borrows\" sounds, and \"bold\" shows admiration."},
+ {dok:3,b:"Poetry: supporting theme with evidence",q:"Select TWO lines that BEST support the theme that people should share who they are without fear.",type:"multi",o:["Before the sun has climbed the fence","never worrying who might listen","and he copies the doorbell's ring","and let the whole waking world know / there's a singer living inside"],a:[1,3],why:"Both lines show fearless self-expression."},
+ {dok:3,b:"Poetry: theme development",q:"Write 3-4 sentences: How does the theme develop from stanza 1 to stanza 3? Quote at least one phrase from the poem.",type:"sr",check:["States the theme in a full sentence","Quotes a phrase from the poem","Explains how stanza 1 or 2 builds toward the speaker's wish in stanza 3","Connects the bird to the speaker"],model:"Sample: The poem's theme is that being bold and sharing your voice is something to admire. Stanzas 1 and 2 show the bird singing without being \"hushed by shyness or fears.\" In stanza 3 the speaker wishes to be just as bold, which shows the bird is a model for how people could act."}
+ ]
+},
+{
+ title:"2. Reading Informational Text",
+ bench:"Central idea, text sections and features, text structure, author's purpose in multiple accounts, argument and reasoning",
+ passages:[
+ {title:"Article 1: Where Have All the Bees Gone?",
+ text:`A Buzzing Problem
+
+Each spring, orchards hum with the sound of bees moving from blossom to blossom. But in recent years, beekeepers have noticed the hum growing quieter.
+
+FAST FACTS
+- About one in every three bites of food we eat depends on pollinators like bees.
+- Beekeepers in the United States reported losing nearly 40 percent of their honeybee colonies in one recent year.
+
+Why Bees Matter
+
+Bees carry pollen from flower to flower, which allows plants to make fruits, nuts, and seeds. Without bees, apples, almonds, and blueberries would become rare and expensive.
+
+What Is Going Wrong
+
+Scientists point to several causes. Pesticides can poison bees, and tiny mites weaken hives. Meanwhile, cities and farms have replaced wildflower meadows, leaving bees with less food.
+
+How Students Can Help
+
+Young people can make a difference. Planting flowers like sunflowers and lavender gives bees a place to eat. Schools can also reduce pesticide use on their grounds. Small actions, repeated by many people, can bring the hum back.`},
+ {title:"Article 2: Editorial: Think Twice Before Buying a Beehive",
+ text:`Many people believe the best way to save the bees is to start a backyard hive. I disagree. Honeybees are not endangered; farmers keep millions of them. The bees that truly need help are wild native species, like bumblebees, and a crowded neighborhood hive can leave them hungry because there is only so much nectar to go around. Beginners also make mistakes that spread disease among hives. If you really want to help, skip the hive and plant native flowers. Every bee in your neighborhood will thank you.`}
+ ],
+ qs:[
+ {dok:1,b:"Text features",q:"What is the purpose of the \"Fast Facts\" box in Article 1?",o:["To give quick, important facts that support the topic","To tell a story about a beekeeper","To define a hard vocabulary word","To show the author's opinion"],a:[0],why:"Sidebars highlight key facts."},
+ {dok:1,b:"Text sections",q:"Which heading would help a student find ways to help bees?",o:["A Buzzing Problem","Why Bees Matter","What Is Going Wrong","How Students Can Help"],a:[3],why:"The heading names the content of the section."},
+ {dok:2,b:"Central idea",q:"Which sentence best states the central idea of Article 1?",o:["Pesticides should be banned immediately.","Honeybees make the best honey.","Bees are essential to our food, they are in trouble, and people can help.","Orchards are noisy each spring."],a:[2],why:"The sections build the idea: importance, problem, and solution."},
+ {dok:2,b:"How sections convey meaning",q:"How does the section \"What Is Going Wrong\" contribute to the article?",o:["It explains causes of the problem introduced earlier.","It introduces a new unrelated topic.","It argues that bees are not important.","It describes the author's childhood."],a:[0],why:"It lists pesticides, mites, and lost habitat as causes."},
+ {dok:2,b:"Text structure",q:"What is the overall text structure of Article 1?",o:["Chronological order","Compare and contrast","Problem and solution","Description of a place"],a:[2],why:"It states a problem, gives causes, then suggests solutions."},
+ {dok:2,b:"Central idea",q:"Which sentence best states the central idea of Article 2?",o:["Backyard hives are the best way to help bees.","Honeybees are endangered.","Farmers should keep fewer bees.","Planting native flowers helps bees more than starting a backyard hive."],a:[3],why:"The author's main claim is in the second-to-last sentence."},
+ {dok:2,b:"Types of reasoning",q:"The author says a crowded hive \"can leave [wild bees] hungry because there is only so much nectar to go around.\" What type of reasoning is this?",o:["Cause and effect","Appeal to a famous person","Personal story","Definition"],a:[0],why:"Too many hives (cause) lead to less food for wild bees (effect)."},
+ {dok:3,b:"Multiple accounts: shared ideas",q:"Select TWO ideas that BOTH authors would agree with.",type:"multi",o:["Planting flowers helps bees.","Everyone should buy a hive.","Bees play an important role in nature.","Pesticides are the only problem."],a:[0,2],why:"Both articles value bees and recommend flowers."},
+ {dok:3,b:"Author's purpose in multiple accounts",q:"Write 3-4 sentences: Compare the purposes of Article 1 and Article 2. How does each author's purpose affect the information included?",type:"sr",check:["Names Article 1's purpose (inform and encourage action)","Names Article 2's purpose (persuade readers away from hives)","Gives one detail from each article","Explains how purpose changed the content (headings and facts vs. opinion and a direct claim)"],model:"Sample: Article 1 informs readers about the bee decline and encourages students to help, so it uses headings, a Fast Facts box, and several causes. Article 2 is an editorial written to persuade readers not to buy hives, so it states an opinion and gives reasons against it. Both want to help bees, but they recommend different actions."},
+ {dok:3,b:"Evaluating an argument",q:"Which statement from Article 2 is the WEAKEST because it is an overgeneralization without evidence?",o:["Honeybees are not endangered; farmers keep millions of them.","Beginners also make mistakes that spread disease among hives.","Every bee in your neighborhood will thank you.","There is only so much nectar to go around."],a:[2],why:"\"Every bee\" is an exaggeration that cannot be proven."},
+ {dok:3,b:"Tracking an argument",q:"Write 3-4 sentences: Identify the claim of Article 2, two reasons the author gives, and tell whether you find the argument convincing and why.",type:"sr",check:["States the claim","Names two reasons","Gives your judgment","Supports your judgment with a specific detail"],model:"Sample: The author claims that planting native flowers is better than starting a backyard hive. The reasons are that crowded hives take food from wild bees and that beginners can spread disease. The argument is fairly convincing because the reasons make sense, but it would be stronger with a study or a statistic."}
+ ]
+},
+{
+ title:"3. Reading Across Genres & Vocabulary",
+ bench:"Rhetorical appeals, figurative language, context clues, roots and affixes, connotation, reference materials, comparing authors across time",
+ passages:[
+ {title:"Speech: Let Us Sleep!",
+ text:`Good morning, board members. As the president of the sixth grade class and a student who has not seen a sunrise with open eyes in months, I ask you to start school later. Doctors recommend that kids our age get nine to twelve hours of sleep, yet our buses arrive before the sun does. One study found that schools that started an hour later saw higher grades and fewer absences. Right now, we shuffle into first period like zombies, burning the candle at both ends. Picture a student with her head on the desk, too tired to raise her hand. Is that the education we want? Give us the gift of an extra hour. Our brains, and our future, depend on it.`},
+ {title:"Passage Pair: Two Views of a New Invention",
+ text:`1906 newspaper column:
+"The horseless carriage is a noisy, smoky beast that frightens horses and ladies alike. Let us hope it proves a passing fad."
+
+Modern article:
+"Self-driving cars are a promising tool that could make roads safer, yet like any new technology, they must be tested carefully before they are trusted."`}
+ ],
+ qs:[
+ {dok:1,b:"Rhetorical appeals",q:"\"Picture a student with her head on the desk, too tired to raise her hand\" is mainly an appeal to:",o:["Pathos (emotion)","Ethos (credibility)","Logos (logic)","None of these"],a:[0],why:"The image is meant to make the audience feel concern."},
+ {dok:1,b:"Rhetorical appeals",q:"\"As the president of the sixth grade class\" is an attempt to build:",o:["Logos","Pathos","Ethos","Rhyme"],a:[2],why:"Naming her role builds credibility."},
+ {dok:2,b:"Rhetorical appeals",q:"Which appeal do the doctors' recommendation and the study about later start times mainly use?",o:["Logos","Pathos","Ethos","Humor"],a:[0],why:"Facts and research are logical evidence."},
+ {dok:2,b:"Figurative language, tone and meaning",q:"What does the simile \"we shuffle into first period like zombies\" add to the speech?",o:["It makes the speech serious and scientific.","It uses humor and exaggeration to show how tired students are.","It tells the audience exactly when buses arrive.","It shows that students are afraid."],a:[1],why:"The exaggeration is playful but makes the point about exhaustion."},
+ {dok:2,b:"Figurative language: idioms",q:"What does the idiom \"burning the candle at both ends\" mean?",o:["Saving energy","Starting a fire","Doing too much without enough rest","Reading by candlelight"],a:[2],why:"It means wearing yourself out by doing too much."},
+ {dok:2,b:"Context clues",q:"Read: \"The board's rule seemed arbitrary; it was based on whim rather than any good reason.\" What does \"arbitrary\" mean?",o:["Carefully researched","Very strict","Friendly","Based on random choice instead of reason"],a:[3],why:"The clue is \"based on whim rather than any good reason.\""},
+ {dok:2,b:"Greek and Latin roots",q:"The Latin root \"spect\" means \"to look.\" Which word most likely means \"a person who watches an event\"?",o:["Director","Spectator","Collector","Instructor"],a:[1],why:"Spectator contains \"spect.\""},
+ {dok:2,b:"Affixes",q:"The prefix \"un-\" means \"not\" and the suffix \"-able\" means \"able to be.\" What does \"unbreakable\" mean?",o:["Able to be broken again","Not able to be broken","Broken before","Breaking quickly"],a:[1],why:"un (not) + break + able (able to be)."},
+ {dok:2,b:"Connotation and denotation",q:"All of these words mean \"thin,\" but which has the most POSITIVE connotation?",o:["Scrawny","Bony","Slender","Skinny"],a:[2],why:"\"Slender\" suggests graceful; the others sound unhealthy or unflattering."},
+ {dok:2,b:"Reference materials",q:"A dictionary lists: novel (adj.) new and different; novel (noun) a long fictional book. Which meaning fits \"The scientist proposed a novel solution\"?",o:["A long fictional book","Something that is very old","Something new and different","Something dangerous"],a:[2],why:"The word describes the solution, so it is the adjective meaning."},
+ {dok:3,b:"Compare authors across time periods",q:"Which statement best compares the word choice of the 1906 columnist and the modern writer?",o:["Both writers use harsh words to show fear.","The 1906 columnist praises the automobile.","The 1906 columnist uses harsh words like \"beast\" to show fear, while the modern writer uses balanced words like \"promising\" and \"carefully\" to show cautious hope.","Neither writer shows an attitude."],a:[2],why:"The words \"beast\" and \"fad\" are negative; \"promising\" and \"carefully\" are balanced."},
+ {dok:3,b:"Compare authors across time periods",q:"Write 3-4 sentences: Compare how the two writers address a new invention. Quote a word or phrase from each, and explain why their time periods might have led to different attitudes.",type:"sr",check:["Describes the 1906 attitude (fear or rejection)","Describes the modern attitude (hopeful but careful)","Quotes a word or phrase from each text","Explains how the time period or experience affects each attitude"],model:"Sample: The 1906 columnist calls the car a \"noisy, smoky beast\" and hopes it is a \"passing fad,\" which shows fear of something new. The modern writer calls self-driving cars \"a promising tool\" that must be \"tested carefully,\" which shows hope with caution. In 1906 cars were unfamiliar and frightened horses, while today people have seen technology improve safety and know new inventions need testing."},
+ {dok:3,b:"Rhetorical appeals: evaluating",q:"Write 3-4 sentences: Which rhetorical appeal (ethos, logos, or pathos) is MOST convincing in \"Let Us Sleep!\"? Quote the speech and explain why it works.",type:"sr",check:["Chooses one appeal","Quotes the speech","Explains how it affects the audience","Gives a reason it is more convincing than the others"],model:"Sample: Logos is the most convincing because the speaker says, \"One study found that schools that started an hour later saw higher grades and fewer absences.\" Facts and research are hard for the board to argue against. The emotional picture of a tired student helps, but evidence makes the request seem reasonable and serious."}
+ ]
+}
+];
+
+/* ===== STATE & SAVING ===== */
+let st={name:"",a:{},c:{}}, cur=0;
+const $=id=>document.getElementById(id);
+const key=()=>PREFIX+st.name.trim().toLowerCase();
+function save(){
+  if(!st.name.trim()){ $("status").textContent="Type your name so your work saves."; return; }
+  localStorage.setItem(key(),JSON.stringify({a:st.a,c:st.c,tab:cur}));
+  $("status").textContent="✔ Saved on this device at "+new Date().toLocaleTimeString();
+}
+function load(){
+  const d=JSON.parse(localStorage.getItem(key())||"null");
+  st.a=d?d.a:{}; st.c=d?d.c:{}; cur=d&&typeof d.tab==="number"?d.tab:0;
+  localStorage.setItem(PREFIX+"lastname",st.name);
+  $("status").textContent=d?"Welcome back! Your work was loaded where you left off.":"New student. Your work will save automatically.";
+  render();
+}
+function backup(){
+  const blob=new Blob([JSON.stringify({name:st.name,a:st.a,c:st.c},null,2)],{type:"application/json"});
+  const l=document.createElement("a"); l.href=URL.createObjectURL(blob);
+  l.download="ELA_Set2_"+(st.name||"student")+".json"; l.click();
+}
+function resetStudent(){
+  if(!st.name.trim()){ alert("Type the student's name first."); return; }
+  const code=prompt("Teacher code:");
+  if(code===TEACHER_CODE){
+    if(confirm("Erase ALL saved work for "+st.name+"?")){
+      localStorage.removeItem(key()); st.a={}; st.c={}; cur=0;
+      $("status").textContent="Work reset for "+st.name+"."; render();
+    }
+  } else if(code!==null){ alert("Incorrect code."); }
+}
+
+/* ===== TEXT TO SPEECH ===== */
+function say(t){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);
+  u.rate=parseFloat($("rate").value); u.lang="en-US";
+  speechSynthesis.speak(u);
+}
+function sayEl(id){ say(document.getElementById(id).dataset.t); }
+const esc=s=>s.replace(/"/g,"&quot;");
+
+/* ===== HELPERS ===== */
+function hasAns(a){ return a!==undefined&&a!==""&&!(Array.isArray(a)&&!a.length); }
+function isRight(id,q){
+  const a=st.a[id];
+  if(!hasAns(a)) return false;
+  if(q.type==="multi") return JSON.stringify((a||[]).slice().sort())===JSON.stringify(q.a.slice().sort());
+  return a===q.a[0];
+}
+function lock(id){
+  if(!hasAns(st.a[id])){ alert("Choose or write an answer first."); return; }
+  if(!confirm("Lock in your answer? You only get ONE chance and cannot change it.")) return;
+  st.c[id]=true; save(); render();
+}
+function goTab(i){ cur=i; save(); render(); window.scrollTo(0,0); }
+
+/* ===== RENDER ===== */
+function render(){
+  const y=window.scrollY;
+  $("tabs").innerHTML=S.map((s,i)=>`<button class="tab ${i==cur?"on":""}" onclick="goTab(${i})">${s.title}</button>`).join("")
+    +`<button class="tab ${cur==S.length?"on":""}" onclick="goTab(${S.length})">📊 My Score Summary</button>`;
+  if(cur===S.length){ $("app").innerHTML=summary(); window.scrollTo(0,0); return; }
+  const sec=S[cur];
+  let h=`<div class="card"><h2>${sec.title}</h2><div class="bench">Skills: ${sec.bench}</div>${progress(sec)}
+    <p class="lk">⚠ You get ONE chance on each question. Choose carefully, then press "Lock in my answer."</p></div>`;
+  sec.passages.forEach((p,i)=>{
+    const id=`p${cur}_${i}`;
+    h+=`<div class="card passage" id="${id}" data-t="${esc(p.title+". "+p.text)}"><h3>${p.title} <button class="spk" onclick="sayEl('${id}')">🔊 Read aloud</button></h3>${p.text}</div>`;
+  });
+  sec.qs.forEach((q,j)=>{
+    const id=`s${cur}q${j}`, ans=st.a[id], done=!!st.c[id];
+    const qt=`Question ${j+1}. ${q.q}`+(q.o?" "+q.o.map((o,k)=>"Choice "+"ABCD"[k]+". "+o).join(". "):"");
+    h+=`<div class="card ${done?"locked":""}" id="${id}" data-t="${esc(qt)}"><span class="dok dok${q.dok}">DOK ${q.dok}</span><span class="bench">${q.b}</span>
+    <p><b>${j+1}. ${q.q}</b> <button class="spk" onclick="sayEl('${id}')">🔊</button></p>`;
+    if(q.type==="sr"){
+      h+=`<textarea data-id="${id}" ${done?"disabled":""} placeholder="Type your answer here...">${ans||""}</textarea>`;
+      if(!done) h+=`<button class="lock" onclick="lock('${id}')">🔒 Submit written response</button>`;
+      else h+=`<div class="lk">🔒 Submitted</div><div class="fb"><b>Did you...</b><ul>${q.check.map(c=>`<li>${c}</li>`).join("")}</ul><b>Model answer:</b> ${q.model}</div>`;
+    } else {
+      const multi=q.type==="multi";
+      q.o.forEach((o,k)=>{
+        const on=multi?(ans||[]).includes(k):ans===k;
+        h+=`<label class="opt"><input type="${multi?"checkbox":"radio"}" name="${id}" data-id="${id}" data-k="${k}" ${on?"checked":""} ${done?"disabled":""}> ${"ABCD"[k]}. ${o}
+        <button class="spk" onclick="event.preventDefault();say('Choice ${"ABCD"[k]}. ${o.replace(/'/g,"\\'").replace(/"/g,"")}')">🔊</button></label>`;
+      });
+      if(!done) h+=`<button class="lock" onclick="lock('${id}')">🔒 Lock in my answer</button>`;
+      else {
+        const ok=isRight(id,q);
+        h+=`<div class="lk">🔒 Locked</div><div class="fb"><span class="${ok?"good":"bad"}">${ok?"✔ Correct!":"✘ Not correct."}</span> ${q.why}</div>`;
+      }
+    }
+    h+=`</div>`;
+  });
+  $("app").innerHTML=h;
+  window.scrollTo(0,y);
+}
+function progress(sec){
+  const n=sec.qs.length; let d=0;
+  sec.qs.forEach((q,j)=>{ if(st.c["s"+cur+"q"+j]) d++; });
+  return `<p><b>Progress:</b> ${d} of ${n} locked in</p>`;
+}
+
+/* ===== SUMMARY PAGE (counts locked-in answers only) ===== */
+function summary(){
+  let totalQ=0,totalRight=0,totalSub=0,srTotal=0,srSub=0;
+  const dok={1:{r:0,t:0},2:{r:0,t:0},3:{r:0,t:0}};
+  let rows="", weak=[];
+  S.forEach((sec,i)=>{
+    let q=0,r=0,sub=0,sr=0,srA=0;
+    sec.qs.forEach((item,j)=>{
+      const id="s"+i+"q"+j, locked=!!st.c[id];
+      if(item.type==="sr"){ sr++; srTotal++; if(locked){srA++;srSub++;} }
+      else {
+        q++; totalQ++; dok[item.dok].t++;
+        if(locked){ sub++; totalSub++; }
+        if(locked&&isRight(id,item)){ r++; totalRight++; dok[item.dok].r++; }
+        else if(locked) weak.push(item.b);
+      }
+    });
+    const pct=q?Math.round(r/q*100):0;
+    rows+=`<tr><td>${sec.title}</td><td>${r} / ${q}</td><td>${pct}%</td><td>${sub} / ${q}</td><td>${srA} / ${sr}</td></tr>`;
+  });
+  const overall=totalQ?Math.round(totalRight/totalQ*100):0;
+  const dokRows=[1,2,3].map(d=>{
+    const p=dok[d].t?Math.round(dok[d].r/dok[d].t*100):0;
+    return `<tr><td><span class="dok dok${d}">DOK ${d}</span></td><td>${dok[d].r} / ${dok[d].t}</td><td>${p}%</td></tr>`;
+  }).join("");
+  const unique=[...new Set(weak)];
+  return `<div class="card"><h2>📊 Score Summary${st.name?" for "+st.name:""}</h2>
+    <p style="font-size:1.4rem"><b>Overall (multiple choice): ${totalRight} / ${totalQ} (${overall}%)</b></p>
+    <p>Locked in: ${totalSub} of ${totalQ} multiple-choice questions · ${srSub} of ${srTotal} written responses submitted</p>
+    <button onclick="window.print()">🖨 Print summary</button></div>
+  <div class="card"><h3>By Section</h3>
+    <table border="1" cellpadding="6" style="border-collapse:collapse;width:100%">
+    <tr style="background:#ece3f7"><th>Section</th><th>Correct</th><th>Percent</th><th>Locked in</th><th>Written</th></tr>${rows}</table></div>
+  <div class="card"><h3>By Depth of Knowledge</h3>
+    <table border="1" cellpadding="6" style="border-collapse:collapse;width:100%">
+    <tr style="background:#ece3f7"><th>Level</th><th>Correct</th><th>Percent</th></tr>${dokRows}</table>
+    <p class="bench">Written responses are DOK 3 and are self-checked with the checklist, so they are not scored here.</p></div>
+  <div class="card"><h3>Skills to Review</h3>
+    ${unique.length?"<ul>"+unique.map(u=>`<li>${u}</li>`).join("")+"</ul>":"<p>Nothing to review yet. Keep going, or you got everything you locked in right! 🎉</p>"}</div>`;
+}
+
+/* ===== EVENTS & STARTUP ===== */
+document.addEventListener("input",e=>{
+  const id=e.target.dataset&&e.target.dataset.id; if(!id) return;
+  if(st.c[id]) return;               // locked: no changes allowed
+  if(e.target.tagName==="TEXTAREA"){ st.a[id]=e.target.value; }
+  else if(e.target.type==="radio"){ st.a[id]=+e.target.dataset.k; }
+  else if(e.target.type==="checkbox"){
+    const arr=st.a[id]||[], k=+e.target.dataset.k;
+    st.a[id]=e.target.checked?[...new Set([...arr,k])]:arr.filter(x=>x!==k);
+  }
+  save();
+});
+$("name").addEventListener("change",e=>{ st.name=e.target.value; load(); });
+window.addEventListener("beforeunload",()=>{ speechSynthesis.cancel(); save(); });
+
+const last=localStorage.getItem(PREFIX+"lastname");
+if(last){ $("name").value=last; st.name=last; load(); } else render();
+</script>
+</body>
+</html>
